@@ -1,0 +1,44 @@
+<style>
+.left-box {
+  float: left;
+  width: 30%;
+}
+.right-box {
+  float: right;
+  width: 70%;
+}
+</style>
+<div class='left-box'><div align="right"><br /><br /><br /><br /><br /><br /><img src="<%=asset_path 'elep.jpg'%>"></img></div></div>
+<div class='right-box'>
+<div class="container">
+  <left>
+  <br /><br /><br /><br /><br /><br />
+  <h2>로그인</h2>
+  <br />
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="field">
+      <%= f.label :이메일 %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :비밀번호 %><br />
+      <%= f.password_field :password, autocomplete: "current-password" %>
+    </div>
+  
+    <% if devise_mapping.rememberable? %>
+      <div class="field">
+        <%= f.check_box :remember_me %>
+      </div>
+    <% end %>
+  
+    <div class="actions">
+      <br /><br /><br />
+      <button type="submit" class="btn btn-primary btn-lg blue darken-4">로그인</button>
+    </div>
+  <% end %>
+  <br />
+  </left>
+</div>
+</div>
+

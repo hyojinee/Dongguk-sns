@@ -1,0 +1,75 @@
+<div class="card post">
+                    <div class="card-content">
+                        <% if post.user.avatar %>
+                            <img class="circle thumbnail" src="<%= post.user.avatar.thumb.url %>">
+                        <% end %>
+                        <span class="card-title"><%= post.user.name %></span>
+                        <span><%= post.created_at %></span>
+                   
+                        <% if user_signed_in? && current_user != post.user %>
+                            <% if current_user.followings.include?(post.user) %>
+                                <%= form_tag follow_path(post.user.id), method: :delete, class: "right" do %>
+                                    <button class="btn blue darken-4">팔로우 취소</button>
+                                <% end %>
+                            <% else %>
+                                <%= form_tag follows_path, method: :post, class: "right" do %>
+                                    <input type="hidden" name="followed_id" value= "<%= post.user.id %>" >
+                                    <button class="btn blue darken-4">팔로우</button>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    
+                        
+                        <div class="card-image">
+                            <br /><br />
+                            <% if post.image.url %>
+                                <img src="<%= post.image.url %>">
+                            <% end %>
+                        </div>
+                        <p class="pre-line"><br /><%= post.content %></p>
+                    </div>
+                        
+                    <div class="card-action">
+                        <%= post.likes.size %> 명이 좋아합니다. &emsp;
+                        <% if current_user.is_like?(post) %>
+                            <%= link_to "좋아요 취소", post_like_path(post), method: "post", class: "pink-text text-accent-3" %>
+                        <% else %>
+                            <%= link_to "좋아요", post_like_path(post), method: "post", class: "pink-text text-accent-3" %>
+                        <% end %>
+                        <br />
+                        <%= post.dislikes.size %> 명이 싫어합니다. &emsp;
+                        <% if current_user.is_dislike?(post) %>
+                            <%= link_to "싫어요 취소", post_dislike_path(post), method: "post", class: "pink-text text-accent-3" %>
+                        <% else %>
+                            <%= link_to "싫어요", post_dislike_path(post), method: "post", class: "pink-text text-accent-3" %>
+                        <% end %>
+                        <% if current_user.id == post.user_id %>
+                            <%= link_to "삭제", post_path(post), method: "delete", class: "right pink-text text-accent-3" %>
+                            <%= link_to "수정", edit_post_path(post), class: "right pink-text text-accent-3" %>
+                        <% end %>
+                        
+                        <%= form_tag post_ments_path(post) do %>
+                            <div class="input-field">
+                                <%= text_area_tag :content, nil, class: "materialize-textarea", placeholder: "댓글을 작성해주세요.", required: true %>
+                            </div>
+                          
+                            <div class="input-field">
+                                <%= button_tag "댓글 쓰기", class: "btn blue darken-4" %>
+                            </div>
+                        <% end %>
+                        <% if post.ments.present? %>
+                            <ul class="collection">
+                                <% post.ments.each do |ment| %>
+                                    <li class="collection-item">
+                                        <span class="title"><%= ment.user.name %></span>
+                                        <span class="right"><%= ment.created_at %></span>
+                                        <p class="pre-line"><%= ment.content %></p>
+                                        <% if ment.user.id == current_user.id %>
+                                            <div><%= link_to "댓글 삭제", post_ment_path(post, ment), method: "delete", class: "pink-text text-accent-3" %></div>
+                                        <% end %>
+                                    </li>
+                                <% end %>
+                            </ul>
+                        <% end %>
+                    </div>
+                </div>

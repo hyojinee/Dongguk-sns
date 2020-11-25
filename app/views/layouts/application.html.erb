@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sns</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+
+  <body>
+    <nav>
+    <div class="nav-wrapper blue darken-4">
+      <a href="/" class="brand-logo center"><font style="font-size:38pt; font-family: HY동녘B"><strong>동국 스토리</strong></font></a>
+      <ul class="left hide-on-med-and-down">
+        <% if user_signed_in? %>
+          <li><a href="/users/edit"><%= current_user.name %></a></li>
+          <li><%= link_to '로그아웃', destroy_user_session_path, method: 'delete' %></li>
+        <% else %>
+          <li><a href="/users/sign_in">로그인</a></li>
+          <li><a href="/users/sign_up">회원가입</a></a></li>
+        <% end %>
+        <li><a href="/posts">게시물</a></li>
+      </ul>
+    </div>
+    </nav>
+    <%= yield %>
+</body>
+</html>
