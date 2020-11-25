@@ -1,0 +1,44 @@
+<div class="container">
+  <h2>회원가입</h2>
+  
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+  
+    <div class="field">
+      <%= f.label :이메일 %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :비밀번호 %>
+      <% if @minimum_password_length %>
+      <em>  (<%= @minimum_password_length %> 글자 이상)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :비밀번호확인 %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :이름 %><br />
+      <%= f.text_field :name %>
+    </div>
+    
+    <div class="field">
+      <%= f.label "프로필 사진" %>
+      <br /><br />
+      <%= f.file_field :avatar %>
+      <hr />
+    </div>
+  
+    <div class="actions">
+      <br />
+      <button type="submit" class="btn btn-primary btn-lg blue darken-4">회원가입</button>
+    </div>
+  <% end %>
+  <br />
+  <%= render "devise/shared/links" %>
+</div>

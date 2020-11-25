@@ -1,0 +1,2 @@
+module TagpageHelper
+end
